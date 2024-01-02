@@ -11,6 +11,7 @@ FROM nginx:1.21.0-alpine AS production
 
 # Copy the built source code from the first stage to the Nginx directory
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expose the port that Nginx will listen on 
 EXPOSE 80
 
