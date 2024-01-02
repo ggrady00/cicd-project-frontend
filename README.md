@@ -4,6 +4,26 @@ This is the frontend for adding/editing/deleting learners from our system.
 
 ## Running the app
 
+### Running with Docker
+
+The application can be run with Docker by firstly building the images
+
+```
+docker build -t learners-frontend .
+```
+
+And then running the container
+
+```
+docker run -p 80:80 learners-frontend
+```
+
+Then you should be able to visit:
+
+[http://localhost:80](http://localhost:80)
+
+### Running locally
+
 The instructions assume you have Node and NPM installed
 
 Instructions have been tested against Node version `v18.12.1`
