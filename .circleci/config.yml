@@ -32,19 +32,6 @@ jobs:
           command: npm test
           working_directory: ~/ce-team-project-frontend
 
-  build-image-and-push:
-    working_directory: ~/ce-team-project-frontend
-    docker:
-      - image: cimg/aws:2023.05
-    steps:
-      - setup_remote_docker # Ensures that we can issue docker build commands
-      - aws-ecr/build-and-push-image:
-          repo: awsome_architechs
-          path: "." # This is the directory to look for the Dockerfile
-          build-path: "." # This is directory for Docker to load the build path to source code
-          tag: ${CIRCLE_BUILD_NUM} # This will be automatically replaced with the job number
-          public-registry-alias: z0m6d8f5
-          public-registry: true
 
 
 # Invoke jobs via workflows
@@ -54,7 +41,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-and-test
-      - build-image-and-push:
-          requires: 
-            - build-and-test 
-
+  
