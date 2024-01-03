@@ -24,12 +24,12 @@ jobs:
       # Use mvn clean and package as the standard maven build phase
       - run:
           name: Build
-          command: npm start
+          command: mvn -B -DskipTests clean package
           working_directory: ~/ce-team-project-frontend
       # Then run your tests!
       - run:
           name: Test
-          command: npm test
+          command: mvn test
           working_directory: ~/ce-team-project-frontend
 
 
