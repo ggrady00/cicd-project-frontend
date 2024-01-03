@@ -47,4 +47,4 @@ workflows:
       - build_and_test
       - build-image-and-push:
           requires: 
-            - build-and-test 
+            - build_and_test 
