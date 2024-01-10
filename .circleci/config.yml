@@ -1,22 +1,15 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/configuration-reference
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@8.2.1
   node: circleci/node@5.0.2
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  build_and_test: # this can be any name you choose
-    executor: node/default # use the default executor defined within the orb
+  build: 
+    executor: node/default 
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: npm
-      # - run:
-      #     command: npm run test
-      #     name: Run tests
       - run:
           command: npm run build
           name: Build app
@@ -32,22 +25,20 @@ jobs:
     docker:
       - image: cimg/aws:2023.05
     steps:
-      - setup_remote_docker # Ensures that we can issue docker build commands
+      - setup_remote_docker 
       - aws-ecr/build-and-push-image:
           repo: frontend
-          path: "." # This is the directory to look for the Dockerfile
-          build-path: "." # This is directory for Docker to load the build path to source code
-          tag: ${CIRCLE_BUILD_NUM} # This will be automatically replaced with the job number
+          path: "." 
+          build-path: "." 
+          tag: ${CIRCLE_BUILD_NUM} 
           public-registry-alias: m6p2m6g2
           public-registry: true
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
+
 workflows:
-  demo-app-pipeline: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+  demo-app-pipeline: 
     jobs:
-      - build_and_test
+      - build
       - build-image-and-push:
           requires: 
-            - build_and_test 
+            - build
